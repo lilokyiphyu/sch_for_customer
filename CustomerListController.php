@@ -17,16 +17,9 @@ class CustomerListController extends Framework_ControllerAbstract
     // @note indexには、SSO関係の人は入ってこない。backに入る。
     // Dispdataをクリアする。
     $this->_saveDispdata(array());
-
-    //$this->_setupView(date('Ymd'), '');
-
     $this->_setupView();
     $this->_render('CustomerList');
   }
-
-
-
-
 
   public function searchAction() {
 
@@ -117,91 +110,6 @@ class CustomerListController extends Framework_ControllerAbstract
   	// 企業管理をactiveにする
   	$StatusListActive = "active";
   	$this->_smarty->assign('CustomerListActive', $StatusListActive);
-
-  }
-
-
-  //update
-
-public function editAction()
-{
-  $custmer_info = SessionManager::getCustomerInfo();
-  // Dispdataをクリアする。
-  $this->_saveDispdata(array());
-  $customer_id   = $this->_getParam('customer_id');
-  $companyname = $this->_getParam('companyname');
-  $department  = $this->_getParam('department');
-  $positon      = $this->_getParam('positon');
-  $name   = $this->_getParam('name');
-  $mail   = $this->_getParam('mail');
-  $tel1   = $this->_getParam('tel1');
-  $tel2   = $this->_getParam('tel2');
-  $memo   = $this->_getParam('memo');
-
-
-
-  // 更新処理
-  $param = array(
-        "companyname"=>$companyname       //
-        ,"department"=>$department        //
-        ,"positon"=>$positon        //
-        ,"name"=>$name          //
-        ,"mail"=>$mail
-        ,"tel1"=>$tel1
-        ,"tel2"=>$tel2
-        ,"memo"=>$memo
-
-
-    );
-
-$where = array(
-
-         "customer_id" => $customer_id
-
- );
-$ret = Functions::updateTo($this->_getDBh(),'customer',$param,$where);
-$this->_setupView();
-$this->_forward('index', 'customer-list');
-}
- public function deleteAction()
-
-  {
-  $customer_info = SessionManager::getCustomerInfo();
-
-  $this->_saveDispdata(array());
-
-  $customer_id   = $this->_getParam('customer_id');
-  $companyname = $this->_getParam('companyname');
-  $department  = $this->_getParam('department');
-  $positon      = $this->_getParam('positon');
-  $name   = $this->_getParam('name');
-  $mail   = $this->_getParam('mail');
-  $tel1   = $this->_getParam('tel1');
-  $tel2   = $this->_getParam('tel2');
-  $memo   = $this->_getParam('memo');
-  // 更新処理
-    $param = array(
-                "companyname"=>$companyname       //
-        ,"department"=>$department        //
-        ,"positon"=>$positon        //
-        ,"name"=>$name          //
-        ,"mail"=>$mail
-        ,"tel1"=>$tel1
-        ,"tel2"=>$tel2
-        ,"memo"=>$memo
-
- );
-
-
-    $where = array(
-          "customer_id" => $customer_id
-
-    );
-
-
-    $ret = Functions::deleteFrom($this->_getDBh(), 'customer', $param,$where,'0');
-    $this->_forward('index', 'customer-list');
-
 
   }
 }
